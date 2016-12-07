@@ -126,7 +126,7 @@ public class FunctionalTracerTest {
 
     private void sleep() {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(10);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
