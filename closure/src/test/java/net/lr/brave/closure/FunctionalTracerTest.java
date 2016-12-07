@@ -34,7 +34,7 @@ public class FunctionalTracerTest {
         FunctionalTracer tracer = tracer();
 
         String result = tracer.trace("myFunc", () -> {
-            Thread.sleep(1000);
+            sleep();
             return "myresult";
         });
 
@@ -62,27 +62,6 @@ public class FunctionalTracerTest {
             Assert.assertEquals(3, span.binaryAnnotations.size());
             assertAnnotation(span, "exceptionMessage", "Something bad happened");
             assertAnnotation(span, "exceptionClass", RuntimeException.class.getName());
-            assertAnnotation(span, "lc", "mycomp");
-        }
-    }
-    
-    @Test
-    public void testCallableException() {
-        FunctionalTracer tracer = tracer();
-
-        try {
-            tracer.trace("myop", () -> {
-                throw new Exception("Something bad happened");
-            });
-            Assert.fail();
-        } catch (RuntimeException e) {
-            Assert.assertEquals(1, spans.size());
-            Span span = spans.iterator().next();
-            Assert.assertEquals("myop", span.name);
-            Assert.assertEquals("test", span.serviceNames().iterator().next());
-            Assert.assertEquals(3, span.binaryAnnotations.size());
-            assertAnnotation(span, "exceptionMessage", "Something bad happened");
-            assertAnnotation(span, "exceptionClass", Exception.class.getName());
             assertAnnotation(span, "lc", "mycomp");
         }
     }

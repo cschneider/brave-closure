@@ -1,7 +1,5 @@
 package net.lr.brave.closure;
 
-import java.util.concurrent.Callable;
-
 import com.github.kristofa.brave.Brave;
 
 public class FunctionalTracer {
@@ -25,7 +23,7 @@ public class FunctionalTracer {
         }
     }
     
-    public <T> T trace(String operation, Callable<T> run) {
+    public <T> T trace(String operation, MyCallable<T> run) {
         brave.localTracer().startNewSpan(component, operation);
         try {
             return run.call();
